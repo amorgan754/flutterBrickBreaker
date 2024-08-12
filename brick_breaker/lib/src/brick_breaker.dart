@@ -31,6 +31,7 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, KeyboardEvents 
     world.add(PlayArea());
 
     world.add(Ball(
+      difficultyModifier: difficultyModifier,
       radius: ballRadius,
       position: size/2,
       velocity: Vector2((rand.nextDouble() - 0.5) * width, height * 0.2).normalized()..scale(height/4)
@@ -42,7 +43,18 @@ class BrickBreaker extends FlameGame with HasCollisionDetection, KeyboardEvents 
       position: Vector2(width / 2, height * 0.95)
     ));
 
-    debugMode = true;
+    await world.addAll([
+      for (var i = 0; i < brickColors.length; i++)
+        for(var j = 1; 1 < 5; j++)
+          Brick(
+            position: Vector2((i + 0.5) * brickWidth + (i + 1) * brickGutter, 
+            (j + 2.0) * brickHeight + j * brickGutter,
+          ),
+          color: brickColors[i],
+          ),
+    ]);
+
+    // debugMode = true;
   }
 
   @override
